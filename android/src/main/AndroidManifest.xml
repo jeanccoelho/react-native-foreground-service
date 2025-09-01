@@ -1,6 +1,15 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.voximplant.foregroundservice">
-
+    
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
+    <service 
+        android:name=".VIForegroundService"
+        android:enabled="true"
+        android:exported="false"
+        android:foregroundServiceType="none" />
+        
 </manifest>
   

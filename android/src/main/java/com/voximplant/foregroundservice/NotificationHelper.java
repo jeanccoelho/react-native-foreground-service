@@ -10,6 +10,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -82,8 +83,11 @@ class NotificationHelper {
             return null;
         }
         Intent notificationIntent = new Intent(context, mainActivityClass);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent,
-                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? (PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT) : PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, flags);
 
         Notification.Builder notificationBuilder;
 
@@ -134,8 +138,11 @@ class NotificationHelper {
         if (notificationConfig.containsKey("button")) {
             Intent buttonIntent = new Intent();
             buttonIntent.setAction(FOREGROUND_SERVICE_BUTTON_PRESSED);
-            PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent,
-                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? (PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT) : PendingIntent.FLAG_UPDATE_CURRENT);
+            int buttonFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                buttonFlags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, buttonFlags);
 
             notificationBuilder.addAction(0, notificationConfig.getString("button"), pendingButtonIntent);
         }

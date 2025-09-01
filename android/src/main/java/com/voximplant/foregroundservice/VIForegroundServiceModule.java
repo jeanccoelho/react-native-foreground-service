@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.content.pm.PackageManager;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
@@ -110,7 +111,12 @@ public class VIForegroundServiceModule extends ReactContextBaseJavaModule {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(FOREGROUND_SERVICE_BUTTON_PRESSED);
-        getReactApplicationContext().registerReceiver(foregroundReceiver, filter);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getReactApplicationContext().registerReceiver(foregroundReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            getReactApplicationContext().registerReceiver(foregroundReceiver, filter);
+        }
 
         if (componentName != null) {
             promise.resolve(null);

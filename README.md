@@ -15,17 +15,23 @@ See [the Android official documentation](https://developer.android.com/guide/com
 
 ### Automatic installation (Android only)
 
-- React Native 0.60+
+- React Native 0.60+ (Android SDK 36+)
 
     CLI autolink feature links the module while building the app.
 
-    1. Add the FOREGROUND_SERVICE permission to the application's `AndroidManifest.xml`:
+    1. Add the required permissions to the application's `AndroidManifest.xml`:
         ```
         <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+        <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
         ```
-    2. Add VIForegroundService as a service to the application's `AndroidManifest.xml`:
+    2. Add VIForegroundService as a service to the application's `AndroidManifest.xml` (inside the `<application>` tag):
         ```
-        <service android:name="com.voximplant.foregroundservice.VIForegroundService"> </service>
+        <service 
+            android:name="com.voximplant.foregroundservice.VIForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="none" />
+        ```
 
 - React Native <= 0.59
 
@@ -34,10 +40,15 @@ See [the Android official documentation](https://developer.android.com/guide/com
     1. Add the FOREGROUND_SERVICE permission to the application's `AndroidManifest.xml`:
         ```
         <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+        <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
         ```
     2. Add VIForegroundService as a service to the application's `AndroidManifest.xml`:
         ```
-        <service android:name="com.voximplant.foregroundservice.VIForegroundService"> </service>
+        <service 
+            android:name="com.voximplant.foregroundservice.VIForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="none" />
         ```
 
 ### Manual installation (Android only, React Native <= 0.59)
@@ -56,13 +67,17 @@ See [the Android official documentation](https://developer.android.com/guide/com
 4. Add the FOREGROUND_SERVICE permission to the application's `AndroidManifest.xml`:
     ```
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     ```
 5. Add VIForegroundService as a service to the application's `AndroidManifest.xml`:
     ```
-    <service android:name="com.voximplant.foregroundservice.VIForegroundService"
-             android:exported="false"> </service>
+    <service 
+        android:name="com.voximplant.foregroundservice.VIForegroundService"
+        android:enabled="true"
+        android:exported="false"
+        android:foregroundServiceType="none" />
     ```
-6. For targetSdkVersion Android API >= 31
+6. For targetSdkVersion Android API >= 31 (now required for API 36)
 
     Add android:exported="true" to the application's `AndroidManifest.xml` activity section
     ```

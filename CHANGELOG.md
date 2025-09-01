@@ -1,5 +1,12 @@
 # Changelog
 
+### 3.1.0
+- Migração para Android SDK 36
+- Adicionada permissão POST_NOTIFICATIONS para Android 13+
+- Melhorada compatibilidade com PendingIntent flags para Android 14+
+- Atualizada configuração do serviço em primeiro plano para APIs mais recentes
+- Corrigido registro de BroadcastReceiver para Android 13+
+
 ### 3.0.2
 - Fix for [#43](https://github.com/voximplant/react-native-foreground-service/issues/43): application is crashed when running on iOS
 - Fix for [#36](https://github.com/voximplant/react-native-foreground-service/issues/36): application build error on android targeting api 31+
